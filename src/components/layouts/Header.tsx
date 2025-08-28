@@ -7,7 +7,7 @@ import { useSidebar } from '@/store/sidebar.store';
 export default function Header() {
 	const { isOpen, toggle } =  useSidebar();
 	return (
-		<header className='w-full h-16 sticky top-0 bg-slate-50 left-0 shadow flex items-center justify-between px-8'>
+		<header className='w-full h-16 sticky top-0 bg-white left-0 shadow flex items-center justify-between px-8'>
 			<button
 				className='scale-150 cursor-pointer'
 				onClick={toggle}

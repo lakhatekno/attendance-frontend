@@ -1,8 +1,6 @@
 'use client';
 
-import { sidebarMenu } from '@/model/sidebar.model';
 import { useSidebar } from '@/store/sidebar.store';
-import Link from 'next/link';
 import SidebarMenu from './SidebarMenu';
 
 export default function Sidebar() {
