@@ -17,6 +17,8 @@ export interface AttendanceLogState {
   setFilter: (key: keyof FilterState, value: string | undefined) => void;
   filterLogs: () => void; 
   filteredLogs: AttendanceLog[]; 
+  manualRecordModal: boolean;
+  setManualRecordModal: () => void;
 }
 
 export interface FilterState {
@@ -39,4 +41,11 @@ export interface IndividualAttendanceLog {
   recordTime: string;
   category: AttendanceCategory;
   status: AttendanceStatus;
+}
+
+export interface AttendanceRecord {
+  identityNumber: string;
+  date: string;
+  recordTime: string;
+  category: AttendanceCategory;
 }

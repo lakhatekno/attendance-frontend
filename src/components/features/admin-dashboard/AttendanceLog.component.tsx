@@ -38,6 +38,14 @@ export default function AttendanceLog() {
 
 			{/* Table */}
 			<LogTable />
+			<BaseModal
+				title="Record Manual"
+				open={manualRecordModal}
+				onClose={setManualRecordModal}
+			>
+        <div></div>
+        <AttendanceModal />
+      </BaseModal>
 		</section>
 	);
 }

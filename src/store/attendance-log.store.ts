@@ -29,4 +29,6 @@ export const useAttendanceLogStore = create<AttendanceLogState>((set, get) => ({
 		});
     set({filteredLogs: filtered});
 	},
+	manualRecordModal: false,
+	setManualRecordModal: () => set({manualRecordModal: !get().manualRecordModal}),
 }));
