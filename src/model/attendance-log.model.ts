@@ -26,3 +26,17 @@ export interface FilterState {
   category?: AttendanceCategory;
   status?: AttendanceStatus;
 }
+
+export interface TodayAttendance {
+  date: string;
+  recordTime: string;
+  category: AttendanceCategory;
+  status: AttendanceStatus;
+}
+
+export interface IndividualAttendanceLog {
+  date: string;
+  recordTime: string;
+  category: AttendanceCategory;
+  status: AttendanceStatus;
+}
