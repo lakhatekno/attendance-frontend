@@ -16,5 +16,5 @@ export interface SidebarMenuItem {
 
 export const sidebarMenu: SidebarMenuItem[] = [
 	{ label: 'Dashboard', href: '/admin', icon: MdSpaceDashboard },
-	{ label: 'Karyawan', href: '/user-management', icon: FaUsers }
+	{ label: 'Karyawan', href: '/admin/user-management', icon: FaUsers }
 ];
