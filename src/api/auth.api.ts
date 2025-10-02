@@ -8,3 +8,13 @@ export async function login(data: Login): Promise<any> {
 	});
 	return response.data;
 }
+
+export async function logout(token: string): Promise<any> {
+	const response = await api.get('/auth/logout', {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	});
+
+  return response.data;
+}

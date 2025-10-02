@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { Login, LoginState } from '@/model';
-import { login } from '@/api/auth.api';
+import { login, logout } from '@/api/auth.api';
 import { persist } from 'zustand/middleware';
 
 export const AuthStore = create<LoginState>()(
@@ -50,7 +50,15 @@ export const AuthStore = create<LoginState>()(
       error: null,
 
       //Logout handler
-			logout: () => set({ accessToken: null, refreshToken: null }),
+			logout: async () => {
+        try {
+          const res = await logout(get().accessToken!);
+          set({ accessToken: null, refreshToken: null });
+          console.log(res.message);
+        } catch (error: any) {
+          console.log(error.response?.data?.error);
+        }
+      },
 		}),
 		{
 			name: 'auth',
