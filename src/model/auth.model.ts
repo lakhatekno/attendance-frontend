@@ -15,5 +15,6 @@ export interface LoginState extends Login {
 	isLoading: boolean;
   accessToken: string | null;
   refreshToken: string | null;
+  error: string | null;
   logout: () => void;
 }

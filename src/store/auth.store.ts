@@ -25,6 +25,7 @@ export const AuthStore = create<LoginState>()(
 
       //Submit handler
 			submitHandler: async (data: Login) => {
+        console.info('Logging in...');
 				set({ isLoading: true });
 				try {
 					const res = await login(data);
@@ -32,8 +33,12 @@ export const AuthStore = create<LoginState>()(
 						accessToken: res.accessToken,
 						refreshToken: res.refreshToken,
 					});
-				} catch (error) {
-					console.log(error);
+          console.info('Logged in');
+
+          return res.role;
+				} catch (error: any) {
+					console.log(error.response?.data?.error);
+          set({error: error.response?.data?.error || 'Gagal'})
 				} finally {
 					set({ isLoading: false });
 				}
@@ -42,6 +47,7 @@ export const AuthStore = create<LoginState>()(
 			isLoading: false,
 			accessToken: null,
 			refreshToken: null,
+      error: null,
 
       //Logout handler
 			logout: () => set({ accessToken: null, refreshToken: null }),
