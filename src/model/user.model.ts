@@ -1,5 +1,5 @@
 export interface User {
-	identityNumber: string;
+	id: string;
 	username: string;
 	email: string;
 	name: string;
@@ -8,7 +8,7 @@ export interface User {
 
 export interface UserState {
 	users: User[],
-	setUsers: (users: User[]) => void;
+	setUsers: () => void;
 	addUser: (user: User) => void;
 	updateUser: (user: User) => void;
 	deleteUser: (identityNumber: string) => void; 

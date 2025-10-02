@@ -10,27 +10,12 @@ import { RiFileExcel2Line } from 'react-icons/ri';
 
 export default function UserTable() {
 	const { users, setUsers, deleteUser } = useUserStore();
-	const [openModal, setOpenModal] = useState(true);
+	const [openModal, setOpenModal] = useState(false);
 	const [editUser, setEditUser] = useState<any>(null);
 
 	// Mock data
 	useEffect(() => {
-		setUsers([
-			{
-				identityNumber: 'EMP-001',
-				name: 'John Doe',
-				email: 'john@example.com',
-				username: 'johndoe',
-				role: 'admin',
-			},
-			{
-				identityNumber: 'EMP-002',
-				name: 'Alice Smith',
-				email: 'alice@example.com',
-				username: 'alicesmith',
-				role: 'staff',
-			},
-		]);
+		setUsers();
 	}, [setUsers]);
 
 	return (
@@ -71,21 +56,19 @@ export default function UserTable() {
 						<th className="border-b p-2">Nama</th>
 						<th className="border-b p-2">Email</th>
 						<th className="border-b p-2">Username</th>
-						<th className="border-b p-2">Role</th>
 						<th className="border-b p-2 w-32">Aksi</th>
 					</tr>
 				</thead>
 				<tbody>
 					{users.map((user, index) => (
 						<tr
-							key={user.identityNumber}
+							key={user.id}
 							className={`hover:bg-gray-200 text-xs border-b border-b-gray-200 ${index % 2 !== 0 ? 'bg-gray-100' : 'bg-white'}`}
 						>
-							<td className="p-2">{user.identityNumber}</td>
+							<td className="p-2">{user.id}</td>
 							<td className="p-2">{user.name}</td>
 							<td className="p-2">{user.email}</td>
 							<td className="p-2">{user.username}</td>
-							<td className="p-2">{user.role}</td>
 							<td className="p-2 flex gap-6 text-slate-600">
 								<button
 									className="flex items-center gap-1 hover:text-orange-500 transition-colors cursor-pointer"
@@ -98,7 +81,7 @@ export default function UserTable() {
 								</button>
 								<button
 									className="flex items-center gap-1 hover:text-red-500 transition-colors cursor-pointer"
-									onClick={() => deleteUser(user.identityNumber)}
+									onClick={() => deleteUser(user.id)}
 								>
 									<BiTrash /> Hapus
 								</button>
