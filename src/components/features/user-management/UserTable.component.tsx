@@ -20,6 +20,10 @@ export default function UserTable() {
 		setUsers();
 	}, [setUsers]);
 
+  const deleteHandler = (id: string) => {
+    deleteUser(id);
+  }
+
 	return (
 		<div>
 			<div className="flex justify-between items-center mb-8">
@@ -83,9 +87,9 @@ export default function UserTable() {
 								</button>
 								<button
 									className="flex items-center gap-1 hover:text-red-500 transition-colors cursor-pointer"
-									onClick={() => deleteUser(user.id)}
+									onClick={() => deleteHandler(user.id)}
 								>
-									<BiTrash /> Hapus
+									<BiTrash /> Nonaktifkan
 								</button>
 								<button
 									className="flex items-center gap-1 hover:text-black transition-colors cursor-pointer"

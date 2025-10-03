@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 import { UserCreate, UserState } from '@/model';
-import { createUser, getAllUsers, updateUser } from '@/api/user.api';
+import { createUser, getAllUsers, inactivateUser, updateUser } from '@/api/user.api';
 
 export const useUserStore = create<UserState>((set, get) => ({
 	users: [],
@@ -57,9 +57,25 @@ export const useUserStore = create<UserState>((set, get) => ({
 			});
     }
   },
-	deleteUser: (identityNumber) =>
-		set((state) => ({
-			// users: state.users.filter((u) => u.identityNumber !== identityNumber),
-		})),
+	deleteUser: async (id) => {
+    try {
+      await inactivateUser(id);
+      set({
+				message: {
+					error: false,
+					message: 'User berhasil dinonaktifkan',
+				},
+			});
+      get().setUsers();
+    } catch (error: any) {
+      console.log(error.status)
+      set({
+				message: {
+					error: false,
+					message: 'Gagal menonaktifkan',
+				},
+			});
+    }
+  },
 }));
 
