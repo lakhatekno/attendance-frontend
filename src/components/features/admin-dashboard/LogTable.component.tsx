@@ -1,7 +1,7 @@
 'use client';
 
 import { useAttendanceLogStore } from '@/store/attendance-log.store';
-import { formatDate } from '@/utils/date';
+import { formatDate, formatTime } from '@/utils/date';
 import { useEffect } from 'react';
 
 import { BiPencil } from 'react-icons/bi';
@@ -10,24 +10,7 @@ export default function LogTable() {
 	const { setLogs, filteredLogs } = useAttendanceLogStore();
 
 	useEffect(() => {
-		setLogs([
-			{
-				date: '2025-08-28',
-				identityNumber: 'EMP-001',
-				name: 'John Doe',
-				recordTime: '08:00:00',
-				category: 'check-in',
-				status: 'ontime',
-			},
-			{
-				date: '2025-08-28',
-				identityNumber: 'EMP-002',
-				name: 'Alice Smith',
-				recordTime: '08:30:00',
-				category: 'check-in',
-				status: 'late',
-			},
-		]);
+		setLogs();
 	}, [setLogs]);
 
 	if (!filteredLogs.length) {
@@ -54,10 +37,10 @@ export default function LogTable() {
 						className={`hover:bg-gray-200 cursor-default text-xs border-b border-b-gray-200
             ${index % 2 !== 0 ? 'bg-gray-100' : 'bg-white'}`}
 					>
-						<td className="p-2">{formatDate(log.date)}</td>
-						<td className="p-2">{log.identityNumber}</td>
-						<td className="p-2">{log.name}</td>
-						<td className="p-2">{log.recordTime}</td>
+						<td className="p-2">{formatDate(log.record)}</td>
+						<td className="p-2">{log.shift_assignment.user.id}</td>
+						<td className="p-2">{log.shift_assignment.user.name}</td>
+						<td className="p-2">{formatTime(log.record)}</td>
 						<td className="p-2 capitalize">{log.category}</td>
 						<td className={`p-2 font-medium`}>
 							<p

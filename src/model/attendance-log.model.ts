@@ -1,11 +1,16 @@
-export type AttendanceCategory = 'check-in' | 'check-out';
-export type AttendanceStatus = 'ontime' | 'late' | 'early';
+export type AttendanceCategory = 'checkin' | 'checkout';
+export type AttendanceStatus = 'ontime' | 'late' | 'early' | 'early-leave' | 'late-checkout';
 
 export interface AttendanceLog {
   date: string;
-  identityNumber: string;
+  shift_assignment: {
+    user: {
+      id: string,
+      name: string,
+    }
+  }
   name: string;
-  recordTime: string;
+  record: string;
   category: AttendanceCategory;
   status: AttendanceStatus;
 }
@@ -13,7 +18,8 @@ export interface AttendanceLog {
 export interface AttendanceLogState {
   logs: AttendanceLog[];
   filters: FilterState;
-  setLogs: (logs: AttendanceLog[]) => void;
+  error: { status: number, message: string } | null;
+  setLogs: () => void;
   setFilter: (key: keyof FilterState, value: string | undefined) => void;
   filterLogs: () => void; 
   filteredLogs: AttendanceLog[]; 
@@ -23,7 +29,7 @@ export interface AttendanceLogState {
 
 export interface FilterState {
   date?: string;
-  identityNumber?: string;
+  id?: string;
   name?: string;
   category?: AttendanceCategory;
   status?: AttendanceStatus;
