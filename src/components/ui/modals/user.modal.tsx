@@ -13,9 +13,9 @@ interface Props {
 }
 
 export default function UserModal({ open, onClose, editUser }: Props) {
-	const { addUser, updateUser } = useUserStore();
+	const { updateUser } = useUserStore();
 	const [form, setForm] = useState<User>({
-		identityNumber: '',
+		id: '',
 		name: '',
 		email: '',
 		username: '',
@@ -36,8 +36,6 @@ export default function UserModal({ open, onClose, editUser }: Props) {
 	const handleSubmit = () => {
 		if (editUser) {
 			updateUser(form);
-		} else {
-			addUser(form);
 		}
 		onClose();
 	};
@@ -46,12 +44,12 @@ export default function UserModal({ open, onClose, editUser }: Props) {
 		<BaseModal
 			open={open}
 			onClose={onClose}
-			title={`${editUser ? 'Edit Data' : 'Tambah Data'}`}
+			title={`Edit Data`}
 		>
 			<div className="flex flex-col gap-6">
 				<input
 					name="identityNumber"
-					value={form.identityNumber}
+					value={form.id}
 					onChange={handleChange}
 					placeholder="ID Karyawan"
 					className="border-b border-b-indigo-900 focus:outline-none focus:border-b-2  p-2 w-full"
@@ -100,7 +98,7 @@ export default function UserModal({ open, onClose, editUser }: Props) {
 					onClick={handleSubmit}
 					className="px-4 py-2 bg-green-600 font-semibold text-slate-100 rounded-lg cursor-pointer hover:bg-green-700"
 				>
-					{editUser ? 'Simpan' : 'Tambah'}
+					{'Simpan'}
 				</button>
 			</div>
 		</BaseModal>
