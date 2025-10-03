@@ -22,8 +22,8 @@ export default function AttendanceLogFilter() {
 				<input
 					type="text"
 					placeholder="ID Pegawai"
-					value={filters.identityNumber || ''}
-					onChange={(e) => setFilter('identityNumber', e.target.value)}
+					value={filters.id || ''}
+					onChange={(e) => setFilter('id', e.target.value)}
 					className="border-b border-b-indigo-900 focus:outline-none focus:border-b-2  p-2"
 				/>
 				<input
@@ -39,8 +39,8 @@ export default function AttendanceLogFilter() {
 					className="border-b border-b-indigo-900 focus:outline-none focus:border-b-2  p-2"
 				>
 					<option value="">Check-In & Check-Out</option>
-					<option value="check-in">Check-In</option>
-					<option value="check-out">Check-Out</option>
+					<option value="checkin">Check-In</option>
+					<option value="checkout">Check-Out</option>
 				</select>
 				<select
 					value={filters.status || ''}
