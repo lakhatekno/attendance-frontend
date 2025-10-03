@@ -1,6 +1,6 @@
 import { AuthStore } from '@/store/auth.store';
 import api from './axios';
-import { UserCreate } from '@/model';
+import { User, UserCreate } from '@/model';
 
 export async function getAllUsers() {
 	const token = AuthStore.getState().accessToken;
@@ -33,4 +33,21 @@ export async function createUser(data: UserCreate) {
 	);
 
   return response.data;
+}
+
+export async function updateUser(data: User) {
+	const token = AuthStore.getState().accessToken;
+	const response = await api.put(
+		'/users',
+		{
+			...data,
+		},
+		{
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+	);
+
+	return response.data;
 }

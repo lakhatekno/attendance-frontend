@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 import { UserCreate, UserState } from '@/model';
-import { createUser, getAllUsers } from '@/api/user.api';
+import { createUser, getAllUsers, updateUser } from '@/api/user.api';
 
 export const useUserStore = create<UserState>((set, get) => ({
 	users: [],
@@ -37,10 +37,26 @@ export const useUserStore = create<UserState>((set, get) => ({
 		}
 		set((state) => ({ users: [...state.users, user] }));
 	},
-	updateUser: (user) =>
-		set((state) => ({
-			// users: state.users.map((u) => (u.identityNumber === user.identityNumber ? user : u)),
-		})),
+	updateUser: async (user) => {
+    try {
+      await updateUser(user);
+      set({
+				message: {
+					error: false,
+					message: 'User berhasil dibuat',
+				},
+			});
+      get().setUsers();
+    } catch (error: any) {
+      console.log(error.status)
+      set({
+				message: {
+					error: true,
+					message: 'Gagal mengubah informasi user',
+				},
+			});
+    }
+  },
 	deleteUser: (identityNumber) =>
 		set((state) => ({
 			// users: state.users.filter((u) => u.identityNumber !== identityNumber),
