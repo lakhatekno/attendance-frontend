@@ -51,3 +51,20 @@ export async function updateUser(data: User) {
 
 	return response.data;
 }
+
+export async function inactivateUser(id: string) {
+	const token = AuthStore.getState().accessToken;
+	const response = await api.put(
+		'/users/inactivate',
+		{
+			id: id,
+		},
+		{
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+	);
+
+	return response.data;
+}
