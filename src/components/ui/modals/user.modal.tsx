@@ -52,6 +52,7 @@ export default function UserModal({ open, onClose, editUser }: Props) {
 					value={form.id}
 					onChange={handleChange}
 					placeholder="ID Karyawan"
+          required
 					className="border-b border-b-indigo-900 focus:outline-none focus:border-b-2  p-2 w-full"
 					disabled={!!editUser}
 				/>
@@ -60,6 +61,7 @@ export default function UserModal({ open, onClose, editUser }: Props) {
 					value={form.name}
 					onChange={handleChange}
 					placeholder="Nama"
+          required
 					className="border-b border-b-indigo-900 focus:outline-none focus:border-b-2  p-2 w-full"
 				/>
 				<input
@@ -67,6 +69,7 @@ export default function UserModal({ open, onClose, editUser }: Props) {
 					value={form.email}
 					onChange={handleChange}
 					placeholder="Email"
+          required
 					className="border-b border-b-indigo-900 focus:outline-none focus:border-b-2  p-2 w-full"
 				/>
 				<input
@@ -74,6 +77,7 @@ export default function UserModal({ open, onClose, editUser }: Props) {
 					value={form.username}
 					onChange={handleChange}
 					placeholder="Username"
+          required
 					className="border-b border-b-indigo-900 focus:outline-none focus:border-b-2  p-2 w-full"
 				/>
 				<select
@@ -82,7 +86,6 @@ export default function UserModal({ open, onClose, editUser }: Props) {
 					onChange={handleChange}
 					className="border-b border-b-indigo-900 focus:outline-none focus:border-b-2  p-2 w-full"
 				>
-					<option value="staff">Staff</option>
 					<option value="user">User</option>
 				</select>
 			</div>
