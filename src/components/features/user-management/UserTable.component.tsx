@@ -7,10 +7,12 @@ import { BiPencil, BiTrash, BiKey } from 'react-icons/bi';
 import { CgUserList } from 'react-icons/cg';
 import UserModal from '@/components/ui/modals/user.modal';
 import { RiFileExcel2Line } from 'react-icons/ri';
+import AddUserModal from '@/components/ui/modals/addUser.modal';
 
 export default function UserTable() {
 	const { users, setUsers, deleteUser } = useUserStore();
 	const [openModal, setOpenModal] = useState(false);
+	const [openAddModal, setOpenAddModal] = useState(false);
 	const [editUser, setEditUser] = useState<any>(null);
 
 	// Mock data
@@ -29,7 +31,7 @@ export default function UserTable() {
 					<button
 						onClick={() => {
 							setEditUser(null);
-							setOpenModal(true);
+							setOpenAddModal(true);
 						}}
 						className="bg-green-600 flex gap-2 font-medium h-fit w-fit px-4 py-2 items-center rounded-lg text-sm text-slate-100 cursor-pointer"
 					>
@@ -101,6 +103,10 @@ export default function UserTable() {
 				open={openModal}
 				onClose={() => setOpenModal(false)}
 				editUser={editUser}
+			/>
+      <AddUserModal
+				open={openAddModal}
+				onClose={() => setOpenAddModal(false)}
 			/>
 		</div>
 	);
