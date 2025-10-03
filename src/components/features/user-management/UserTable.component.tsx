@@ -3,7 +3,7 @@
 import { useUserStore } from '@/store/user.store';
 import { useEffect, useState } from 'react';
 import { AiOutlineUserAdd } from 'react-icons/ai';
-import { BiPencil, BiTrash, BiKey } from 'react-icons/bi';
+import { BiPencil, BiTrash } from 'react-icons/bi';
 import { CgUserList } from 'react-icons/cg';
 import UserModal from '@/components/ui/modals/user.modal';
 import { RiFileExcel2Line } from 'react-icons/ri';
@@ -41,16 +41,6 @@ export default function UserTable() {
 					>
 						<AiOutlineUserAdd className="scale-125" />
 						Tambah Data
-					</button>
-					<button
-						onClick={() => {
-							setEditUser(null);
-							setOpenModal(true);
-						}}
-						className="bg-slate-700 flex gap-2 font-medium h-fit w-fit px-4 py-2 items-center rounded-lg text-sm text-slate-100 cursor-pointer"
-					>
-						<RiFileExcel2Line className="scale-125" />
-						Impor Data
 					</button>
 				</div>
 			</div>
@@ -90,12 +80,6 @@ export default function UserTable() {
 									onClick={() => deleteHandler(user.id)}
 								>
 									<BiTrash /> Nonaktifkan
-								</button>
-								<button
-									className="flex items-center gap-1 hover:text-black transition-colors cursor-pointer"
-									onClick={() => alert('Ubah password feature')}
-								>
-									<BiKey /> Password
 								</button>
 							</td>
 						</tr>
