@@ -4,11 +4,17 @@ import { RiFileExcel2Line } from 'react-icons/ri';
 import AttendanceLogFilter from './AttendanceLogFilter.component';
 import LogTable from './LogTable.component';
 import BaseModal from '@/components/ui/modals/base.modal';
-import { useAttendanceLogStore } from '@/store/attendance-log.store';
+import { useAttendanceLogOperationsStore } from '@/store/attendance-log.store';
 import AttendanceModal from '@/components/ui/modals/attendance.modal';
+import EditAttendance from '@/components/ui/modals/editAtendance.modal';
 
 export default function AttendanceLog() {
-	const { manualRecordModal, setManualRecordModal } = useAttendanceLogStore();
+	const {
+		manualRecordModal,
+		setManualRecordModal,
+		editRecordModal,
+		setEditRecordModal,
+	} = useAttendanceLogOperationsStore();
 	return (
 		<section className="bg-white shadow rounded-xl p-8">
 			{/* Section Header */}
@@ -38,14 +44,27 @@ export default function AttendanceLog() {
 
 			{/* Table */}
 			<LogTable />
+
+			{/* Manual record modal */}
 			<BaseModal
 				title="Record Manual"
 				open={manualRecordModal}
 				onClose={setManualRecordModal}
 			>
-        <div></div>
-        <AttendanceModal />
-      </BaseModal>
+				<div></div>
+				<AttendanceModal />
+			</BaseModal>
+
+			{/* Edit record modal */}
+			<BaseModal
+				title="Edit"
+				open={editRecordModal}
+				onClose={setEditRecordModal}
+			>
+				<div></div>
+				<EditAttendance />
+			</BaseModal>
 		</section>
 	);
 }
+

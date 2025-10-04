@@ -2,6 +2,7 @@ export type AttendanceCategory = 'checkin' | 'checkout';
 export type AttendanceStatus = 'ontime' | 'late' | 'early' | 'early-leave' | 'late-checkout';
 
 export interface AttendanceLog {
+  id:number;
   date: string;
   shift_assignment: {
     user: {
@@ -22,9 +23,17 @@ export interface AttendanceLogState {
   setLogs: () => void;
   setFilter: (key: keyof FilterState, value: string | undefined) => void;
   filterLogs: () => void; 
-  filteredLogs: AttendanceLog[]; 
+  filteredLogs: AttendanceLog[];
+}
+
+export interface AttendanceLogOperationState {
   manualRecordModal: boolean;
   setManualRecordModal: () => void;
+  editRecordModal: boolean;
+  setEditRecordModal: () => void;
+  updateLogForm: AttendanceLog | null;
+  setLogData: (log: AttendanceLog) => void;
+  updateLogHandler: (log: AttendanceLog) => void;
 }
 
 export interface FilterState {

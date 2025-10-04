@@ -1,6 +1,7 @@
 'use client';
 
-import { useAttendanceLogStore } from '@/store/attendance-log.store';
+import { AttendanceLog } from '@/model';
+import { useAttendanceLogOperationsStore, useAttendanceLogStore } from '@/store/attendance-log.store';
 import { formatDate, formatTime } from '@/utils/date';
 import { useEffect } from 'react';
 
@@ -8,10 +9,16 @@ import { BiPencil } from 'react-icons/bi';
 
 export default function LogTable() {
 	const { setLogs, filteredLogs } = useAttendanceLogStore();
+  const { setEditRecordModal, setLogData } = useAttendanceLogOperationsStore();
 
 	useEffect(() => {
 		setLogs();
 	}, [setLogs]);
+
+  const handlerEdit = (log: AttendanceLog) => {
+    setEditRecordModal();
+    setLogData(log);
+  }
 
 	if (!filteredLogs.length) {
 		return <p className="text-gray-500 text-center">No attendance logs found.</p>;
@@ -33,7 +40,7 @@ export default function LogTable() {
 			<tbody>
 				{filteredLogs.map((log, index) => (
 					<tr
-						key={index}
+						key={log.id}
 						className={`hover:bg-gray-200 cursor-default text-xs border-b border-b-gray-200
             ${index % 2 !== 0 ? 'bg-gray-100' : 'bg-white'}`}
 					>
@@ -54,7 +61,7 @@ export default function LogTable() {
 						<td className="p-2 text-slate-600">
 							<button
 								className="flex gap-2 items-center text-xs cursor-pointer"
-								disabled
+                onClick={(e) => handlerEdit(log)}
 							>
                 <BiPencil className='' />
                 Edit

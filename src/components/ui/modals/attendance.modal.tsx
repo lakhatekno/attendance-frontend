@@ -1,17 +1,17 @@
 'use client';
 
 import { AttendanceRecord } from '@/model';
-import { useAttendanceLogStore } from '@/store/attendance-log.store';
+import { useAttendanceLogOperationsStore } from '@/store/attendance-log.store';
 import { useState } from 'react';
 
 export default function AttendanceModal() {
-	const { setManualRecordModal } = useAttendanceLogStore();
+	const { setManualRecordModal } = useAttendanceLogOperationsStore();
 
 	const [form, setForm] = useState<AttendanceRecord>({
 		identityNumber: '',
 		date: '',
 		recordTime: '',
-		category: 'check-in',
+		category: 'checkin',
 	});
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {

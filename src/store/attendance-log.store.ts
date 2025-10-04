@@ -1,5 +1,5 @@
-import { getAllAttendanceLogs } from '@/api/attendanceLog.api';
-import { AttendanceLogState } from '@/model';
+import { getAllAttendanceLogs, updateAttendanceLog } from '@/api/attendanceLog.api';
+import { AttendanceLogOperationState, AttendanceLogState } from '@/model';
 import { create } from 'zustand';
 
 export const useAttendanceLogStore = create<AttendanceLogState>((set, get) => ({
@@ -38,6 +38,26 @@ export const useAttendanceLogStore = create<AttendanceLogState>((set, get) => ({
 		});
     set({filteredLogs: filtered});
 	},
-	manualRecordModal: false,
+}));
+
+export const useAttendanceLogOperationsStore = create<AttendanceLogOperationState>((set, get) => ({
+  manualRecordModal: false,
 	setManualRecordModal: () => set({manualRecordModal: !get().manualRecordModal}),
+
+  editRecordModal: false,
+  setEditRecordModal: () => set({editRecordModal: !get().editRecordModal}),
+
+  updateLogForm: null,
+	setLogData: (log) => set({updateLogForm: log, editRecordModal: true}),
+
+	updateLogHandler: async (log) => {
+		try {
+			await updateAttendanceLog(log);
+			useAttendanceLogStore.getState().setLogs();
+			// clear form and close modal after successful update
+			set({ updateLogForm: null, editRecordModal: false });
+		} catch (error: any) {
+			console.log(error.status)
+		}
+	}
 }));
