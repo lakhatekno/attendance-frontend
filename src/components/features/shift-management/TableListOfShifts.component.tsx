@@ -1,21 +1,15 @@
-import { getAllActiveShift } from "@/api/shift.api";
 import { ShiftInterface } from "@/model";
+import { useShiftStore } from "@/store/shift.store";
 import { formatTime } from "@/utils/date";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { BiPencil, BiTrash } from "react-icons/bi";
 
 export function TableListOfShifts() {
-  const [shifts, setShifts] = useState<ShiftInterface[]>([])
+  const { shiftData, setShiftData } = useShiftStore();
 
   useEffect(() => {
-    getAllShifts();
-  }, []);
-
-  const getAllShifts = async () => {
-    const data = await getAllActiveShift();
-    setShifts(data);
-    console.log(data)
-  }
+    setShiftData();
+  }, [setShiftData]);
 
 	return (
 		<table className="table-auto border-collapse w-full text-sm">
@@ -28,17 +22,17 @@ export function TableListOfShifts() {
 				</tr>
 			</thead>
 			<tbody>
-				{shifts.map((user, index) => (
+				{shiftData.map((shift: ShiftInterface, index: number) => (
 					<tr
-						key={user.id}
+						key={shift.id}
 						className={`hover:bg-gray-200 text-xs border-b border-b-gray-200 ${
 							index % 2 !== 0 ? 'bg-gray-100' : 'bg-white'
 						}`}
 					>
-						<td className="p-2">{user.name}</td>
-						<td className="p-2">{formatTime(user.shift_start)}</td>
-						<td className="p-2">{formatTime(user.shift_end)}</td>
-						<td className="p-2">{user.cross_day ? 'Ya' : 'Tidak'}</td>
+						<td className="p-2">{shift.name}</td>
+						<td className="p-2">{formatTime(shift.shift_start)}</td>
+						<td className="p-2">{formatTime(shift.shift_end)}</td>
+						<td className="p-2">{shift.cross_day ? 'Ya' : 'Tidak'}</td>
 						<td className="p-2 flex gap-6 text-slate-600">
 							<button
 								className="flex items-center gap-1 hover:text-orange-500 transition-colors cursor-pointer"
