@@ -5,8 +5,11 @@ import { useEffect } from "react";
 import { BiPencil, BiTrash } from "react-icons/bi";
 
 export function TableListOfShifts() {
-  const { shiftData, setShiftData } = useShiftStore();
+  const { shiftData, setShiftData, inactivateShift } = useShiftStore();
 
+	const handlerInactivateShift = (id: number) => {
+		inactivateShift(id);
+	}
   useEffect(() => {
     setShiftData();
   }, [setShiftData]);
@@ -35,14 +38,8 @@ export function TableListOfShifts() {
 						<td className="p-2">{shift.cross_day ? 'Ya' : 'Tidak'}</td>
 						<td className="p-2 flex gap-6 text-slate-600">
 							<button
-								className="flex items-center gap-1 hover:text-orange-500 transition-colors cursor-pointer"
-								onClick={() => {}}
-							>
-								<BiPencil /> Edit
-							</button>
-							<button
 								className="flex items-center gap-1 hover:text-red-500 transition-colors cursor-pointer"
-								onClick={() => {}}
+								onClick={() => handlerInactivateShift(shift.id)}
 							>
 								<BiTrash /> Nonaktifkan
 							</button>
