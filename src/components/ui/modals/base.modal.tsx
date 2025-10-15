@@ -6,7 +6,7 @@ interface Props {
 	open: boolean;
 	onClose: () => void;
 	title?: string;
-	children?: React.ReactNode[];
+	children?: React.ReactNode | React.ReactNode[];
 }
 
 export default function BaseModal({ open, onClose, title, children }: Props) {
@@ -24,7 +24,7 @@ export default function BaseModal({ open, onClose, title, children }: Props) {
 						<MdClose className="scale-150" />
 					</button>
 				</div>
-				{children?.map((childNode) => childNode)}
+				{children}
 			</div>
 		</div>
 	);
