@@ -16,10 +16,15 @@ export interface ShiftBody {
 
 export interface ShiftState {
   shiftData: ShiftInterface[];
+  inactiveShiftData: ShiftInterface[];
   openModal: boolean;
+  showInactive: boolean;
   message: { error: boolean; message: string };
   setOpenModal: () => void;
+  setShowInactive: () => void;
   setShiftData: () => void;
+  setInactiveShiftData: () => void;
   createShift: (data: ShiftBody) => void;
   inactivateShift: (id: number) => void;
+  activateShift: (id: number) => void;
 }
