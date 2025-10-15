@@ -22,3 +22,16 @@ export async function createShift(data: any) {
 
 	return response.data;
 }
+
+export async function inactivateShift(id: number) {
+	const token = AuthStore.getState().accessToken;
+	const response = await api.put('/shifts/inactivate-shift', {
+		id: id,
+	}, {
+		headers: {
+			Authorization: `Bearer ${token}`
+		}
+	});
+
+	return response.status;
+}
