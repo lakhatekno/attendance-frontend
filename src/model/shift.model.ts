@@ -21,4 +21,5 @@ export interface ShiftState {
   setOpenModal: () => void;
   setShiftData: () => void;
   createShift: (data: ShiftBody) => void;
+  inactivateShift: (id: number) => void;
 }

@@ -1,4 +1,4 @@
-import { createShift, getAllActiveShift } from '@/api/shift.api';
+import { createShift, getAllActiveShift, inactivateShift } from '@/api/shift.api';
 import { ShiftBody, ShiftState } from '@/model';
 import { create } from 'zustand';
 
@@ -24,5 +24,13 @@ export const useShiftStore = create<ShiftState>((set, get) => ({
 		} catch (error: any) {
 			set({ message: { error: true, message: error.response?.data?.message || 'Gagal menambahkan shift' } });
 		}
-	}
+	},
+  inactivateShift: async (id: number) => {
+    try {
+      await inactivateShift(id);
+      get().setShiftData();
+    } catch (error: any) {
+      console.log(error)
+    }
+  }
 }));
