@@ -1,6 +1,7 @@
 import { MdSpaceDashboard } from 'react-icons/md';
 import { FaUsers } from 'react-icons/fa6';
 import { RiCalendarScheduleLine } from "react-icons/ri";
+import { LuCalendarSync } from "react-icons/lu";
 
 export interface SidebarState {
 	isOpen: boolean;
@@ -18,5 +19,6 @@ export interface SidebarMenuItem {
 export const sidebarMenu: SidebarMenuItem[] = [
 	{ label: 'Dashboard', href: '/admin', icon: MdSpaceDashboard },
 	{ label: 'Karyawan', href: '/admin/user-management', icon: FaUsers },
-  { label: 'Pengaturan Shift', href: '/admin/shift-management', icon: RiCalendarScheduleLine }
+  { label: 'Pengaturan Shift', href: '/admin/shift-management', icon: RiCalendarScheduleLine },
+  { label: 'Penugasan Shift', href: '/admin/shift-assignment', icon: LuCalendarSync },
 ];

@@ -2,3 +2,4 @@ export * from './attendance-log.model';
 export * from './auth.model';
 export * from './user.model';
 export * from './shift.model';
+export * from './shiftManagement.model';
