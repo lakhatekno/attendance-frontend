@@ -1,4 +1,27 @@
+export interface Employee {
+  id: string;
+  name: string;
+}
+
+export interface ShiftCalendarGridProps {
+  employees: Employee[];
+}
+
+export interface Assignment {
+  emp_id: string;
+  date: string;
+  shift_id: string;
+  shift_name: string;
+}
+
 export interface ShiftManagementState {
+  assignments: Record<string, Assignment>;
+  activeMonth: Date;
+  activeShifts: { id: string; name: string; color: string;}[];
+  batchBuffer: Record<string, Assignment>;
+  isBacthMode: boolean;
+  handleGridClick: (empId: string, day: Date) => void;
+  getShiftColor: (shiftId: string) => string;
   addShiftModal: boolean;
   setAddShiftModal: () => void;
 }
