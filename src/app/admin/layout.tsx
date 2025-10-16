@@ -9,7 +9,7 @@ export default function AdminLayout({
 	return (
 		<main className="flex min-h-screen bg-gray-100 text-slate-900">
 			<Sidebar />
-			<div className="w-full relative">
+			<div className="w-full relative overflow-y-hidden">
 				<Header />
 				<div className="p-8">{children}</div>
 			</div>
