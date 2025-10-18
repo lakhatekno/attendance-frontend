@@ -15,6 +15,8 @@ export interface Assignment {
 }
 
 export interface ShiftManagementState {
+  retrievedAssignments: any;
+  setRetrievedAssignments: (data: any) => void;
   assignments: Record<string, Assignment>;
   activeMonth: Date;
   activeShifts: { id: string; name: string; color: string;}[];

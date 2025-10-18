@@ -1,16 +1,32 @@
 import { Employee, ShiftCalendarGridProps } from '@/model';
 import { useShiftManagementStore } from '@/store/shiftManagement.store';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import clsx from 'clsx';
+import { getAllAssignment } from '@/api/shiftManagement.api';
 
 export default function ShiftCalendarGrid({ employees }: ShiftCalendarGridProps) {
-	const { assignments, activeMonth, handleGridClick, getShiftColor } = useShiftManagementStore();
+	const { assignments, setRetrievedAssignments, activeMonth, handleGridClick, getShiftColor } = useShiftManagementStore();
 
 	const daysInMonth = useMemo(() => {
 		const year = activeMonth.getFullYear();
 		const month = activeMonth.getMonth();
 		return Array.from({ length: new Date(year, month + 1, 0).getDate() }, (_, i) => i + 1);
 	}, [activeMonth]);
+
+	const populateAssignments = async () => {
+		const currentDate = new Date();
+		const fetchedAssignments = await getAllAssignment({
+			month: currentDate.getMonth(),
+			year: currentDate.getFullYear(),
+		});
+
+		setRetrievedAssignments(fetchedAssignments)
+		
+	}
+
+	useEffect(() => {
+		populateAssignments();
+	}, []);
 	return (
 		<div className="overflow-auto border">
 			<table className="w-full table-fixed border-collapse text-sm">

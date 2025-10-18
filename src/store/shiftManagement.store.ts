@@ -2,6 +2,7 @@ import { Assignment, ShiftManagementState } from '@/model';
 import { create } from 'zustand';
 
 export const useShiftManagementStore = create<ShiftManagementState>((set, get) => ({
+	retrievedAssignments: {},
 	assignments: {},
 	activeMonth: new Date(),
 	activeShifts: [
@@ -54,6 +55,7 @@ export const useShiftManagementStore = create<ShiftManagementState>((set, get) =
 		set({ addShiftModal: !get().addShiftModal });
 	},
 
+	setRetrievedAssignments: (data: any) => set({ assignments: data }),
 	setIsAssigning: () => set({ isAssigning: !get().isAssigning }),
 
 }));
