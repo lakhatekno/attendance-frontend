@@ -1,11 +1,13 @@
 import { RiAddFill } from 'react-icons/ri';
 import { LuCalendarSync } from 'react-icons/lu';
+import { FaCheck } from 'react-icons/fa6';
 import AddShiftModal from '@/components/ui/modals/addShift.modal';
 
 import { useShiftManagementStore } from '@/store/shiftManagement.store';
 
 export default function HeadSection() {
   const { setAddShiftModal } = useShiftManagementStore();
+	const { isAssigning, setIsAssigning } = useShiftManagementStore();
 
   return (
     <div className="flex justify-between items-center mb-8">

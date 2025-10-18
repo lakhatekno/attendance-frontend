@@ -20,8 +20,10 @@ export interface ShiftManagementState {
   activeShifts: { id: string; name: string; color: string;}[];
   batchBuffer: Record<string, Assignment>;
   isBacthMode: boolean;
+  isAssigning: boolean;
   handleGridClick: (empId: string, day: Date) => void;
   getShiftColor: (shiftId: string) => string;
   addShiftModal: boolean;
   setAddShiftModal: () => void;
+  setIsAssigning: () => void;
 }

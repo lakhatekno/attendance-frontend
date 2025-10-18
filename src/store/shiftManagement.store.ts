@@ -11,6 +11,7 @@ export const useShiftManagementStore = create<ShiftManagementState>((set, get) =
 	],
 	batchBuffer: {},
 	isBacthMode: false,
+	isAssigning: false,
 
 	getShiftColor: (shiftId) => {
 		const shift = get().activeShifts.find((s) => s.id === shiftId);
@@ -26,8 +27,6 @@ export const useShiftManagementStore = create<ShiftManagementState>((set, get) =
 		const key = `${empId}-${date}`;
 		const current = assignments[key];
 
-    console.log('key', key)
-    console.log(assignments)
 		const currentIndex = current ? activeShifts.findIndex((s) => s.id === current.shift_id) : -1;
 
 		const nextShift = currentIndex === -1 ? activeShifts[0] : activeShifts[currentIndex + 1] || undefined;
@@ -54,4 +53,7 @@ export const useShiftManagementStore = create<ShiftManagementState>((set, get) =
 	setAddShiftModal: () => {
 		set({ addShiftModal: !get().addShiftModal });
 	},
+
+	setIsAssigning: () => set({ isAssigning: !get().isAssigning }),
+
 }));
