@@ -14,14 +14,14 @@ export const useShiftManagementStore = create<ShiftManagementState>((set, get) =
 
 	getShiftColor: (shiftId) => {
 		const shift = get().activeShifts.find((s) => s.id === shiftId);
-    // console.log('getting shift color')
 		return shift ? shift.color : 'bg-white';
 	},
 
 	handleGridClick: (empId, day) => {
-		const { assignments, activeMonth, activeShifts, isBacthMode, batchBuffer } = get();
+		const { assignments, activeShifts, isBacthMode, batchBuffer } = get();
 
-		const date = new Date(activeMonth.getFullYear(), activeMonth.getMonth(), day.getDate()).toISOString().split('T')[0];
+		const date = day.toISOString().split('T')[0];
+    console.log('handler date', date)
 
 		const key = `${empId}-${date}`;
 		const current = assignments[key];
