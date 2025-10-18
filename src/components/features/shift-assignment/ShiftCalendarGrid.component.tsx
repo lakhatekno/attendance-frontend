@@ -1,11 +1,12 @@
-import { Employee, ShiftCalendarGridProps } from '@/model';
+import { Employee, ShiftCalendarGridProps, User } from '@/model';
 import { useShiftManagementStore } from '@/store/shiftManagement.store';
 import { useEffect, useMemo } from 'react';
 import clsx from 'clsx';
 import { getAllAssignment } from '@/api/shiftManagement.api';
+import { getAllUsers } from '@/api/user.api';
 
-export default function ShiftCalendarGrid({ employees }: ShiftCalendarGridProps) {
-	const { assignments, setRetrievedAssignments, activeMonth, handleGridClick, getShiftColor } = useShiftManagementStore();
+export default function ShiftCalendarGrid() {
+	const { employees, setRetrievedEmployees, assignments, setRetrievedAssignments, activeMonth, handleGridClick, getShiftColor } = useShiftManagementStore();
 
 	const daysInMonth = useMemo(() => {
 		const year = activeMonth.getFullYear();
@@ -20,12 +21,16 @@ export default function ShiftCalendarGrid({ employees }: ShiftCalendarGridProps)
 			year: currentDate.getFullYear(),
 		});
 
-		setRetrievedAssignments(fetchedAssignments)
+		const fetchedEmployees = await getAllUsers();
+
+		setRetrievedEmployees(fetchedEmployees);
+		setRetrievedAssignments(fetchedAssignments);
 		
 	}
 
 	useEffect(() => {
 		populateAssignments();
+
 	}, []);
 	return (
 		<div className="overflow-auto border">
@@ -45,7 +50,7 @@ export default function ShiftCalendarGrid({ employees }: ShiftCalendarGridProps)
 					</tr>
 				</thead>
 				<tbody>
-					{employees.map((emp) => (
+					{employees.map((emp: User) => (
 						<tr key={emp.id}>
 							<td className="sticky left-0 border-b border-b-black overflow-ellipsis bg-indigo-50 p-2 w-20">{emp.id}</td>
 							<td className="sticky left-20 border-b border-b-black overflow-ellipsis bg-indigo-50 p-2 w-36">{emp.name}</td>
@@ -53,7 +58,6 @@ export default function ShiftCalendarGrid({ employees }: ShiftCalendarGridProps)
 							{daysInMonth.map((day) => {
 								const date = new Date(activeMonth.getFullYear(), activeMonth.getMonth(), day);
 								const dateKey = date.toISOString().split('T')[0];
-                console.log('date', date)
 								const cellKey = `${emp.id}-${dateKey}`;
 								
                 const assignment = assignments[cellKey];

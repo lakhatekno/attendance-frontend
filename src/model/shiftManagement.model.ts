@@ -1,3 +1,5 @@
+import { User } from "./user.model";
+
 export interface Employee {
   id: string;
   name: string;
@@ -15,6 +17,8 @@ export interface Assignment {
 }
 
 export interface ShiftManagementState {
+  employees: User[];
+  setRetrievedEmployees: (data: User[]) => void;
   retrievedAssignments: any;
   setRetrievedAssignments: (data: any) => void;
   assignments: Record<string, Assignment>;
@@ -28,4 +32,5 @@ export interface ShiftManagementState {
   addShiftModal: boolean;
   setAddShiftModal: () => void;
   setIsAssigning: () => void;
+  submitAssignments: () => void; 
 }
