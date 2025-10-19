@@ -1,12 +1,10 @@
-import { Employee, ShiftCalendarGridProps, User } from '@/model';
+import { User } from '@/model';
 import { useShiftManagementStore } from '@/store/shiftManagement.store';
 import { useEffect, useMemo } from 'react';
 import clsx from 'clsx';
-import { getAllAssignment } from '@/api/shiftManagement.api';
-import { getAllUsers } from '@/api/user.api';
 
 export default function ShiftCalendarGrid() {
-	const { employees, setRetrievedEmployees, assignments, setRetrievedAssignments, activeMonth, handleGridClick, getShiftColor } = useShiftManagementStore();
+	const { employees, setRetrievedEmployees, assignments, setRetrievedAssignments, setActiveShifts, activeMonth, handleGridClick, getShiftColor } = useShiftManagementStore();
 
 	const daysInMonth = useMemo(() => {
 		const year = activeMonth.getFullYear();
@@ -15,16 +13,9 @@ export default function ShiftCalendarGrid() {
 	}, [activeMonth]);
 
 	const populateAssignments = async () => {
-		const currentDate = new Date();
-		const fetchedAssignments = await getAllAssignment({
-			month: currentDate.getMonth(),
-			year: currentDate.getFullYear(),
-		});
-
-		const fetchedEmployees = await getAllUsers();
-
-		setRetrievedEmployees(fetchedEmployees);
-		setRetrievedAssignments(fetchedAssignments);
+		setRetrievedEmployees();
+		setRetrievedAssignments();
+		setActiveShifts();
 		
 	}
 
@@ -59,9 +50,18 @@ export default function ShiftCalendarGrid() {
 								const date = new Date(activeMonth.getFullYear(), activeMonth.getMonth(), day);
 								const dateKey = date.toISOString().split('T')[0];
 								const cellKey = `${emp.id}-${dateKey}`;
+								let shiftColor: string;
+								let shiftName: string;
 								
                 const assignment = assignments[cellKey];
-								const shiftColor = getShiftColor(assignment?.shift_id);
+
+								if (assignment) {
+									shiftColor = getShiftColor(assignment.shift_id);
+									shiftName = assignment.shift_name;
+								} else {
+									shiftColor = 'bg-white';
+									shiftName = '-';
+								}
 
 								return (
 									<td
@@ -72,7 +72,7 @@ export default function ShiftCalendarGrid() {
 										)}
 										onClick={() => handleGridClick(emp.id, date)}
 									>
-										{assignment?.shift_name || '-'}
+										{shiftName}
 									</td>
 								);
 							})}

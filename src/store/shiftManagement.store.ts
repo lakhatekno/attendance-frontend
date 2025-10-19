@@ -1,30 +1,34 @@
+import { getAllActiveShift } from '@/api/shift.api';
+import { getAllAssignment } from '@/api/shiftManagement.api';
+import { getAllUsers } from '@/api/user.api';
 import { Assignment, ShiftManagementState } from '@/model';
 import { create } from 'zustand';
 
 export const useShiftManagementStore = create<ShiftManagementState>((set, get) => ({
 	employees: [],
-	retrievedAssignments: [],
 	assignments: {},
+	retrievedAssignments: {},
 	activeMonth: new Date(),
-	activeShifts: [
-		{ id: 's1', name: 'Pagi', color: 'bg-yellow-100' },
-		{ id: 's2', name: 'Sore', color: 'bg-orange-100' },
-		{ id: 's3', name: 'Malam', color: 'bg-blue-100' },
-	],
+	activeShifts: [],
 	batchBuffer: {},
 	isBacthMode: false,
 	isAssigning: false,
 
 	getShiftColor: (shiftId) => {
-		const shift = get().activeShifts.find((s) => s.id === shiftId);
-		return shift ? shift.color : 'bg-white';
+		const shiftIndex = get().activeShifts.findIndex((s) => s.id === shiftId);
+		return shiftBackgroundColor[shiftIndex] || 'bg-white';
 	},
 
 	handleGridClick: (empId, day) => {
+		const { isAssigning } = get();
+		
+		if (!isAssigning) {
+			return;
+		}
+
 		const { assignments, activeShifts, isBacthMode, batchBuffer } = get();
 
 		const date = day.toISOString().split('T')[0];
-    console.log('handler date', date)
 
 		const key = `${empId}-${date}`;
 		const current = assignments[key];
@@ -49,7 +53,6 @@ export const useShiftManagementStore = create<ShiftManagementState>((set, get) =
 		}
 
 		set({ assignments: { ...assignments }, batchBuffer: { ...batchBuffer } });
-		console.log(assignments);
 	},
 
 	addShiftModal: false,
@@ -57,9 +60,57 @@ export const useShiftManagementStore = create<ShiftManagementState>((set, get) =
 		set({ addShiftModal: !get().addShiftModal });
 	},
 
-	setRetrievedAssignments: (data: any) => set({ retrievedAssignments: data }),
-	setRetrievedEmployees: (data) => set({ employees: data }),
+	setRetrievedAssignments: async () => {
+		const currentDate = new Date();
+		try {
+			const fetchedAssignments = await getAllAssignment({
+				month: currentDate.getMonth(),
+				year: currentDate.getFullYear(),
+			});
+			set({ 
+				assignments: { ...fetchedAssignments }, 
+				retrievedAssignments: { ...fetchedAssignments },
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	},
+
+	setRetrievedEmployees: async () => {
+		try {
+			const response = await getAllUsers();
+			set({ employees: response });
+		} catch (error) {
+			console.log(error);
+		}
+	},
+	
+	setActiveShifts: async () => {
+			try {
+				const response = await getAllActiveShift();
+				set({ activeShifts: response });
+			} catch (error) {
+				console.log(error);
+			}
+		},
+
 	setIsAssigning: () => set({ isAssigning: !get().isAssigning }),
+
+	handlerCancelAssigning: () => {
+		set({ isAssigning: false, assignments: get().retrievedAssignments });
+		console.log(get().assignments);
+		console.log(get().retrievedAssignments);
+	},
 	submitAssignments: async () => {},
 
 }));
+
+const shiftBackgroundColor = [
+	'bg-green-300',
+	'bg-blue-300',
+	'bg-yellow-300',
+	'bg-purple-300',
+	'bg-indigo-300',
+	'bg-red-300',
+	'bg-gray-300',
+];

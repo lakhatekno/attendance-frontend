@@ -8,7 +8,7 @@ import AddShiftModal from '@/components/ui/modals/addShift.modal';
 import { useShiftManagementStore } from '@/store/shiftManagement.store';
 
 export default function HeadSection() {
-	const { isAssigning, setIsAssigning } = useShiftManagementStore();
+	const { isAssigning, setIsAssigning, handlerCancelAssigning } = useShiftManagementStore();
 
 	return (
 		<div className="flex justify-between items-center mb-8">
@@ -28,7 +28,7 @@ export default function HeadSection() {
 				) : (
 					<>
 						<button
-							onClick={setIsAssigning}
+							onClick={handlerCancelAssigning}
 							className="bg-red-400 hover:bg-red-500 flex gap-2 font-medium h-fit w-fit px-4 py-2 items-center rounded-lg text-sm text-slate-100 cursor-pointer"
 						>
 							<MdOutlineCancel className="scale-125" />

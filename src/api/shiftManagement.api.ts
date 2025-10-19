@@ -16,8 +16,6 @@ export async function getAllAssignment(data: WindowAssignment) {
       Authorization: `Bearer ${token}`,
     }
   });
-  
-  console.log(data);
 
   return response.data;
 }

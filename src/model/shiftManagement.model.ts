@@ -18,12 +18,13 @@ export interface Assignment {
 
 export interface ShiftManagementState {
   employees: User[];
-  setRetrievedEmployees: (data: User[]) => void;
-  retrievedAssignments: any;
-  setRetrievedAssignments: (data: any) => void;
+  setRetrievedEmployees: () => void;
+  setRetrievedAssignments: () => void;
   assignments: Record<string, Assignment>;
+  retrievedAssignments: Record<string, Assignment>;
   activeMonth: Date;
   activeShifts: { id: string; name: string; color: string;}[];
+  setActiveShifts: () => void;
   batchBuffer: Record<string, Assignment>;
   isBacthMode: boolean;
   isAssigning: boolean;
@@ -32,5 +33,6 @@ export interface ShiftManagementState {
   addShiftModal: boolean;
   setAddShiftModal: () => void;
   setIsAssigning: () => void;
+  handlerCancelAssigning: () => void;
   submitAssignments: () => void; 
 }
