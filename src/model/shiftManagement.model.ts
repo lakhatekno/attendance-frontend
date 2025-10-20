@@ -28,11 +28,13 @@ export interface ShiftManagementState {
   batchBuffer: Record<string, Assignment>;
   isBacthMode: boolean;
   isAssigning: boolean;
+  isPauseAssigning: boolean;
   handleGridClick: (empId: string, day: Date) => void;
   getShiftColor: (shiftId: string) => string;
   addShiftModal: boolean;
   setAddShiftModal: () => void;
   setIsAssigning: () => void;
+  handlerPauseAssigning: () => void;
   handlerCancelAssigning: () => void;
   submitAssignments: () => void; 
 }

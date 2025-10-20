@@ -1,6 +1,6 @@
 import { RiAddFill } from 'react-icons/ri';
 import { LuCalendarSync } from 'react-icons/lu';
-import { FaCheck } from 'react-icons/fa6';
+import { FaCheck, FaPause, FaPlay } from 'react-icons/fa6';
 import { MdOutlineCancel } from 'react-icons/md';
 
 import AddShiftModal from '@/components/ui/modals/addShift.modal';
@@ -8,7 +8,7 @@ import AddShiftModal from '@/components/ui/modals/addShift.modal';
 import { useShiftManagementStore } from '@/store/shiftManagement.store';
 
 export default function HeadSection() {
-	const { isAssigning, setIsAssigning, handlerCancelAssigning } = useShiftManagementStore();
+	const { isAssigning, isPauseAssigning, setIsAssigning, handlerPauseAssigning, handlerCancelAssigning } = useShiftManagementStore();
 
 	return (
 		<div className="flex justify-between items-center mb-8">
@@ -33,6 +33,22 @@ export default function HeadSection() {
 						>
 							<MdOutlineCancel className="scale-125" />
 							Batal
+						</button>
+						<button
+							onClick={handlerPauseAssigning}
+							className="bg-amber-400 hover:bg-amber-500 flex gap-2 font-medium h-fit w-fit px-4 py-2 items-center rounded-lg text-sm text-slate-100 cursor-pointer"
+						>
+							{isPauseAssigning ? (
+								<>
+									<FaPlay className="scale-125" />
+									Lanjut
+								</>
+							) : (
+								<>
+									<FaPause className="scale-125" />
+									Jeda
+								</>
+							)}
 						</button>
 						<button
 							onClick={() => {}}

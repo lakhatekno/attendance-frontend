@@ -13,6 +13,7 @@ export const useShiftManagementStore = create<ShiftManagementState>((set, get) =
 	batchBuffer: {},
 	isBacthMode: false,
 	isAssigning: false,
+	isPauseAssigning: false,
 
 	getShiftColor: (shiftId) => {
 		const shiftIndex = get().activeShifts.findIndex((s) => s.id === shiftId);
@@ -20,9 +21,9 @@ export const useShiftManagementStore = create<ShiftManagementState>((set, get) =
 	},
 
 	handleGridClick: (empId, day) => {
-		const { isAssigning } = get();
+		const { isAssigning, isPauseAssigning } = get();
 		
-		if (!isAssigning) {
+		if (!isAssigning || isPauseAssigning) {
 			return;
 		}
 
@@ -96,10 +97,17 @@ export const useShiftManagementStore = create<ShiftManagementState>((set, get) =
 
 	setIsAssigning: () => set({ isAssigning: !get().isAssigning }),
 
+	handlerPauseAssigning: () => {
+		set({ isPauseAssigning: !get().isPauseAssigning })
+	},
+
 	handlerCancelAssigning: () => {
-		set({ isAssigning: false, assignments: get().retrievedAssignments });
-		console.log(get().assignments);
-		console.log(get().retrievedAssignments);
+		set({ 
+			isAssigning: false, 
+			isPauseAssigning: false, 
+			assignments: { ...get().retrievedAssignments }, 
+		});
+
 	},
 	submitAssignments: async () => {},
 
